@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0}
+        li,ul{list-style: none}
+        ul{width: 500px;margin: 100px auto;overflow: hidden}
+        li{width: 140px;height: 120px;border: 1px solid #cecece;float: left;text-align: center;line-height: 30px}
+    </style>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+</head>
+<body>
+        <%if(data){%>
+        <ul>
+            <li>用户名:<%- data.name%></li>
+            <li>级　别:
+                <% switch (data.xuan-0){
+                case 1:%>
+                初级教师
+                <%break;%>
+                <% case 2:%>
+                中级教师
+                <% break;%>
+                <% case 3:%>
+                高级教师
+                <% break;%>
+                <%}%>
+            </li>
+            <li><%if (data.poser){%>
+            政治面貌:
+
+
+                <% switch (data.poser-0){
+                case 1:%>
+                群众
+                <%break;%>
+                <% case 2:%>
+                团员
+                <% break;%>
+                <% case 3:%>
+                党员
+                <% break;%>
+                <%}%>
+
+
+            <%}else {%>
+                未填写请到更新页面更新自己信息
+                    <%}%>
+            </li>
+            <li style="width: 420px"><%if (data.house){%>
+                家庭地址:<%-data.house%>
+                <%}else {%>
+                未填写请到更新页面更新自己信息
+
+                <%}%>
+            </li>
+            <li style="width: 420px"><%if (data.work){%>
+                工作经历:<%-data.work%>
+                <%}else {%>
+                未填写请到更新页面更新自己信息
+
+                <%}%>
+            </li>
+
+            <li style="border: none;margin-top: 20px" onclick=window.history.go(-1)><button class="btn btn-success">返回</button></li>
+        </ul>
+        <!--<button class="btn btn-success">更新</button>-->
+        <%}else {%>
+        用户不存在
+        <%}%>
+
+</body>
+<script src=javascripts/jquery-1.11.0.js></script>
+<script>
+$(".btn").click(function () {
+    var src=$("input").val();
+    var id=window.location.search.split("?id=")[1]
+    console.log(id)
+    $.ajax({
+        type:"POST",
+        url:"/users/jiaoxiang",
+        data:{src:src,id:id},
+        success:function (data) {
+            console.log(data)
+        }
+    })
+})
+</script>
+</html>

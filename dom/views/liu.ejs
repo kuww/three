@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <style>
+        div{margin-bottom: 20px}
+    </style>
+    <script src=javascripts/xheditor/jquery/jquery-1.4.4.min.js></script>
+    <script src="javascripts/xheditor/xheditor-1.2.2.min.js"></script>
+    <script src="javascripts/xheditor/xheditor_lang/zh-cn.js"></script>
+</head>
+<body>
+<h1>留言板</h1>
+<div>
+    <div>标题:<input type=text class="form-group-sm"></div>
+        <div>内容:<textarea id="content" class="form-horizontal xheditor" rows=6 cols=120 ></textarea></div>
+    <button class="btn btn-danger">提交</button>
+</div>
+<div>
+    <table class=table>
+        <tr>
+            <th>序列</th>
+            <th>标题</th>
+            <th>内容</th>
+        </tr>
+        <% result.forEach(function (item,index) {%>
+        <tr>
+            <td><%-index+1 %></td>
+            <td><%-item.title %></td>
+            <td><a href="/xiangqing?id=<%-index+(paged-1)*pagesize%>"><%- item.conn %></a></td>
+        </tr>
+        <% })%>
+    </table>
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li>
+            <a href="/liu?paged=<%-paged=paged<=1?1:paged-1%>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li><a href="/liu?paged=1">首页</a></li>
+        <%for (let i=0;i<pagez;i++){%>
+        <li><a href="/liu?paged=<%-i+1%>"><%-i+1%></a></li>
+        <%}%>
+        <li><a href="/liu?paged=<%-pagez%>">尾页</a></li>
+        <li>
+            <a href="/liu?paged=<%-paged=paged>=pagez-1?pagez:parseInt(paged)+2%>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+</body>
+<script src="javascripts/fwb.js"></script>
+<script>
+    $(".btn").click(function () {
+        if($("input").val().length>0&&$("textarea").val().length>0){
+            $.ajax({
+                type:"POST",
+                url:"/users/liu",
+                data:{title:$("input").val(),conn:$("textarea").val()},
+                success:function (data) {
+                    console.log(data)
+                    location.href="./liu"
+                }
+            })
+        }else {
+            alert("留言不能为空")
+        }
+
+    })
+
+</script>
+</html>

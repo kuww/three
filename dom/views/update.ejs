@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>信息更新</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+
+</head>
+<body>
+<%if(data){%>
+<h3>用户名:<%-data.name%></h3>
+<span>级　别:
+    <% switch (data.xuan-0){
+    case 1:%>
+    初级教师
+    <%break;%>
+    <% case 2:%>
+    中级教师
+    <% break;%>
+    <% case 3:%>
+    高级教师
+    <% break;%>
+    <%}%>
+</span>
+
+<div class="dropdown">
+    政治面貌
+    <select class="form-control">
+        <option value="1" selected="selected">无</option>
+        <option value="2">团员</option>
+        <option value="3">党员</option>
+    </select>
+</div>
+<input type=text class="input-lg" placeholder="请输入你的家庭住址">
+
+<div>工作经历:<textarea id="content" class="form-horizontal xheditor" rows=6 cols=120 ></textarea></div>
+<button class="btn btn-success" style="margin-left: 60px">更新</button>
+<button class="btn btn-default" onclick="location.href='/three?title=xiang'">返回</button>
+<%}else {%>
+请选择你要更新的老师名字
+<%}%>
+</body>
+<script src=javascripts/jquery-1.11.0.js></script>
+<script>
+
+    $(".btn").click(function () {
+        var str1=$("input").eq(0).val();
+        var str2=$("textarea").val();
+        var str3=$("option:selected").val()
+        if(str1.length>0&&str2.length>0){
+            $.ajax({
+                type:"post",
+                url:"/users/update",
+                data:{name:"<%-data.name%>",house:str1,work:str2,poser:str3},
+                success:function (data) {
+                    if(data==1){
+
+                        alert("更新成功")
+                        location.href="/three?title=xiang"
+                    }
+                }
+            })
+
+        }
+    })
+
+</script>
+</html>

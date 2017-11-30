@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>XXX后台系统</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <style>
+        *{margin: 0 ;
+            padding:0;}
+
+        body,html{width: 100%;height: 100%;
+            background-color: rgb(219,69,32);
+            color: #666;
+
+        }
+
+        .header{
+            height: 60px;
+            border-bottom: 2px solid #dedede;
+
+        }
+        .header h1{
+            margin-left: 20px;
+            font-size: 20px;
+            line-height: 20px;
+            float: left;
+            color: #ffffff;
+        }
+        .header ul{
+            float: right;
+            margin-right: 20px;
+            color: #ffffff;
+        }
+        .header ul li{
+            float: left;
+            list-style: none;
+            font-size: 14px;
+            margin-top: 20px;
+            line-height: 20px;
+            padding: 0 10px;
+            cursor: pointer;
+
+        }
+        .header ul li a{
+            font-size: 14px ;
+            text-decoration: none;
+            color: #fff;
+        }
+        .section{
+            height: 800px;
+            overflow: hidden;
+        }
+        .section #left{
+            height: 100%;
+            float: left;
+            width: 160px;
+            color:#ffffff;
+
+        }
+        .section #right{
+            height: 100%;
+            overflow: hidden;
+            background-color: #fff;
+        }
+        #left li{
+            list-style: none;
+            height: 30px;
+            border-bottom: 2px solid #cecece;
+        }
+        #left li a{
+            text-align: center;
+            text-decoration: none;
+            color: #666;
+            display: block;
+            padding: 0 10px;
+            line-height: 30px;
+        }
+
+        .topbox{
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .topbox .form-inline{
+            float: right;
+        }
+        .active{
+            background-color: #4cae4c;
+        }
+       #left li a{
+            color: #ffffff;
+
+        }
+       .header ul .huanfu{
+           position: relative;
+           width: 60px;
+       }
+        .header ul .huanfu>p{
+            margin-left: 12px;
+        }
+        .header ul .huanfu div{
+            display: none;
+            position: absolute;
+            background-color: #000000;
+            width: 100%;
+            text-align: center;
+            z-index: 999999999999999;
+        }
+    </style>
+    <script src=javascripts/jquery-1.11.0.js></script>
+</head>
+<body>
+    <div class="header">
+        <h1>XXX后台系统</h1>
+        <ul>
+            <li class="huanfu">
+                <p>换肤</p>
+                <div>
+                    <p>黑色</p>
+                    <p>绿色</p>
+                    <p>黄色</p>
+                    <p>红色</p>
+                </div>
+            </li>
+            <li>
+                <%if(name){%>
+                用户名:
+                <%- name[0]%>
+                <%}else {%>
+                <a href="/rtwo">             <span style="color:#fff">  登录失败从新登录</span>
+                </a>
+                <%}%>
+            </li>
+            <li>
+                <%if(name){%>
+                    级　别:
+                <% switch (name[1]-0){
+                case 1:%>
+                初级教师
+                <%break;%>
+                <% case 2:%>
+                中级教师
+                <% break;%>
+                <% case 3:%>
+                高级教师
+                <% break;%>
+                <%}%>
+
+                <%}else {%>
+
+                <%}%>
+            </li>
+            <li><a href="/rtwo">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div id="left">
+            <ul>
+                <li class="active"><a href="/three?title=shou">后台首页</a></li>
+                <li><a href="/three?title=xiang">教师列表</a></li>
+                <li><a href="/three?title=xuesheng">学生列表</a></li>
+            </ul>
+        </div>
+        <div id="right">
+            <% if(!title) {%>
+            <!--首页目录-->
+            <div id="ichart-render1"> </div>
+
+
+                <script src='http://www.ichartjs.com/ichart.latest.min.js'></script>
+                <script type='text/javascript'>
+                    $(function(){
+                        var chart = iChart.create({
+                            render:"ichart-render1",
+                            width:800,
+                            height:400,
+                            background_color:"#fefefe",
+                            gradient:false,
+                            color_factor:0.2,
+                            border:{
+                                color:"BCBCBC",
+                                width:1
+                            },
+                            align:"center",
+                            offsetx:0,
+                            offsety:0,
+                            sub_option:{
+                                border:{
+                                    color:"#BCBCBC",
+                                    width:1
+                                },
+                                label:{
+                                    fontweight:500,
+                                    fontsize:11,
+                                    color:"#4572a7",
+                                    sign:"square",
+                                    sign_size:12,
+                                    border:{
+                                        color:"#BCBCBC",
+                                        width:1
+                                    },
+                                    background_color:"#fefefe"
+                                }
+                            },
+                            shadow:true,
+                            shadow_color:"#666666",
+                            shadow_blur:2,
+                            showpercent:false,
+                            column_width:"70%",
+                            bar_height:"70%",
+                            radius:"90%",
+                            title:{
+                                text:"教师等级分布",
+                                color:"#111111",
+                                fontsize:20,
+                                font:"微软雅黑",
+                                textAlign:"center",
+                                height:30,
+                                offsetx:0,
+                                offsety:0
+                            },
+                            subtitle:{
+                                text:"",
+                                color:"#111111",
+                                fontsize:16,
+                                font:"微软雅黑",
+                                textAlign:"center",
+                                height:20,
+                                offsetx:0,
+                                offsety:0
+                            },
+                            footnote:{
+                                text:"",
+                                color:"#111111",
+                                fontsize:12,
+                                font:"微软雅黑",
+                                textAlign:"right",
+                                height:20,
+                                offsetx:0,
+                                offsety:0
+                            },
+                            legend:{
+                                enable:false,
+                                background_color:"#fefefe",
+                                color:"#333333",
+                                fontsize:12,
+                                border:{
+                                    color:"#BCBCBC",
+                                    width:1
+                                },
+                                column:1,
+                                align:"right",
+                                valign:"center",
+                                offsetx:0,
+                                offsety:0
+                            },
+                            coordinate:{
+                                width:"80%",
+                                height:"84%",
+                                background_color:"#ffffff",
+                                axis:{
+                                    color:"#a5acb8",
+                                    width:[1,"",1,""]
+                                },
+                                grid_color:"#d9d9d9",
+                                label:{
+                                    fontweight:500,
+                                    color:"#666666",
+                                    fontsize:11
+                                }
+                            },
+                            label:{
+                                fontweight:500,
+                                color:"#666666",
+                                fontsize:11
+                            },
+                            type:"bar2d",
+                            data:[
+                                {
+                                    name:"初级教师",
+                                    value:<%-zchu%>,
+                                    color:"#4572a7"
+                                },{
+                                    name:"中级教师",
+                                    value:<%-zzhong%>,
+                                    color:"#aa4643"
+                                },{
+                                    name:"高级教师",
+                                    value:<%-zao%>,
+                                    color:"#89a54e"
+                                }
+                            ]
+                        });
+                        chart.draw();
+                    });
+                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div id="ichart-render"></div>
+
+            <script src='http://www.ichartjs.com/ichart.latest.min.js'></script>
+            <script type='text/javascript'>
+                $(function () {
+                    var chart = iChart.create({
+                        render: "ichart-render",
+                        width: 800,
+                        height: 400,
+                        background_color: "#fefefe",
+                        gradient: false,
+                        color_factor: 0.2,
+                        border: {
+                            color: "BCBCBC",
+                            width: 1
+                        },
+                        align: "center",
+                        offsetx: 0,
+                        offsety: 0,
+                        sub_option: {
+                            border: {
+                                color: "#BCBCBC",
+                                width: 1
+                            },
+                            label: {
+                                fontweight: 500,
+                                fontsize: 11,
+                                color: "#4572a7",
+                                sign: "square",
+                                sign_size: 12,
+                                border: {
+                                    color: "#BCBCBC",
+                                    width: 1
+                                },
+                                background_color: "#fefefe"
+                            }
+                        },
+                        shadow: true,
+                        shadow_color: "#666666",
+                        shadow_blur: 2,
+                        showpercent: false,
+                        column_width: "70%",
+                        bar_height: "70%",
+                        radius: "90%",
+                        title: {
+                            text: "年级人数",
+                            color: "#111111",
+                            fontsize: 20,
+                            font: "微软雅黑",
+                            textAlign: "center",
+                            height: 30,
+                            offsetx: 0,
+                            offsety: 0
+                        },
+                        subtitle: {
+                            text: "",
+                            color: "#111111",
+                            fontsize: 16,
+                            font: "微软雅黑",
+                            textAlign: "center",
+                            height: 20,
+                            offsetx: 0,
+                            offsety: 0
+                        },
+                        footnote: {
+                            text: "",
+                            color: "#111111",
+                            fontsize: 12,
+                            font: "微软雅黑",
+                            textAlign: "right",
+                            height: 20,
+                            offsetx: 0,
+                            offsety: 0
+                        },
+                        legend: {
+                            enable: false,
+                            background_color: "#fefefe",
+                            color: "#333333",
+                            fontsize: 12,
+                            border: {
+                                color: "#BCBCBC",
+                                width: 1
+                            },
+                            column: 1,
+                            align: "right",
+                            valign: "center",
+                            offsetx: 0,
+                            offsety: 0
+                        },
+                        coordinate: {
+                            width: "80%",
+                            height: "84%",
+                            background_color: "#ffffff",
+                            axis: {
+                                color: "#a5acb8",
+                                width: [1, "", 1, ""]
+                            },
+                            grid_color: "#d9d9d9",
+                            label: {
+                                fontweight: 500,
+                                color: "#666666",
+                                fontsize: 11
+                            }
+                        },
+                        label: {
+                            fontweight: 500,
+                            color: "#666666",
+                            fontsize: 11
+                        },
+                        type: "column2d",
+                        data: [
+                            {
+                                name: "一年级",
+                                value:<%- xz1 %>,
+                                color: "#4572a7"
+                            }, {
+                                name: "二年级",
+                                value:<%- xz2 %>,
+                                color: "#aa4643"
+                            }, {
+                                name: "三年级",
+                                value:<%- xz3 %>,
+                                color: "#89a54e"
+                            }, {
+                                name: "四年级",
+                                value:<%- xz4 %>,
+                                color: "#4572a7"
+                            }, {
+                                name: "五年级",
+                                value:<%- xz5 %>,
+                                color: "#4572a7"
+                            }, {
+                                name: "六年级",
+                                value:<%- xz6 %>,
+                                color: "#4572a7"
+                            }
+                        ]
+                    });
+                    chart.draw();
+                });
+
+
+
+            </script>
+
+
+
+
+
+
+
+
+
+            <%}
+            else if(title=="xiang"){%>
+            <div class="topbox">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control input3" id="exampleInputName2" placeholder="请输入用户名">
+                    </div>
+                    <button class="btn btn-default btn3">搜索</button>
+                </div>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>名字</th>
+                    <th>职称</th>
+                    <th>操作</th>
+                </tr>
+                <%for (var i in yonghu){%>
+
+                    <tr>
+                        <td><%-yonghu[i].name%></td>
+                        <td>
+                            <% switch (yonghu[i].xuan-0){
+                            case 1:%>
+                            初级教师
+                            <%break;%>
+                            <% case 2:%>
+                            中级教师
+                            <% break;%>
+                            <% case 3:%>
+                            高级教师
+                            <% break;%>
+                            <%}%>
+                        </td>
+                        <td>
+                            <button class="btn btn-success" onclick="location.href='/jiaoxiang?id=<%-i-0+(paged-1)*pagesize%>'">查看</button>
+                            <button class="btn btn-default" onclick="location.href='/update?id=<%-i-0+(paged-1)*pagesize%>'">更新</button>
+                            <button class="btn btn-danger btn1"  onclick="location.href='/shan?id=<%-yonghu[i].name%>'">删除</button>
+                        </td>
+                    </tr>
+                <%}%>
+            </table>
+
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a href="/three?title=xiang&paged=<%-paged=paged<=1?1:paged-1%>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li><a href="/three?title=xiang&paged=1">首页</a></li>
+                    <%for (let i=0;i<pagez;i++){%>
+                    <li><a href="/three?title=xiang&paged=<%-i+1%>"><%-i+1%></a></li>
+                    <%}%>
+                    <li><a href="/three?title=xiang&paged=<%-pagez%>">尾页</a></li>
+                    <li>
+                        <a href="/three?title=xiang&paged=<%-paged=paged>=pagez-1?pagez:parseInt(paged)+2%>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <%}else if(title=="xuesheng"){%>
+
+            <button class="btn btn-success" onclick="location.href='/xzeng'" style="margin:10px">增加</button>
+
+            <div class="dropdown" style="width: 300px">
+                <select class="form-control" style="width: 200px;float: left">
+                    <option value="1" selected="selected">一年级</option>
+                    <option value="2">二年级</option>
+                    <option value="3">三年级</option>
+                    <option value="4">四年级</option>
+                    <option value="5">五年级</option>
+                    <option value="6">六年级</option>
+                </select>
+
+
+                <button class="btn btn-default btn6" style="float: right">搜索</button>
+            </div>
+
+
+
+
+            <table class="table">
+                <tr>
+                    <th>名字</th>
+                    <th>年级</th>
+                    <th>数学</th>
+                    <th>语文</th>
+                    <th>操作</th>
+                </tr>
+                <%for(var  i in xuesheng){%>
+
+                    <tr>
+
+                        <td><%-xuesheng[i].name%></td>
+                        <td>
+                            <% switch (xuesheng[i].class-0){
+                            case 1:%>
+                            一年级
+                            <%break;%>
+                            <% case 2:%>
+                            二年级
+                            <% break;%>
+                            <% case 3:%>
+                            三年级
+                            <% break;%>
+                            <% case 4:%>
+                            四年级
+                            <% break;%>
+                            <% case 5:%>
+                            五年级
+                            <% break;%>
+                            <% case 6:%>
+                            六年级
+                            <% break;%>
+                            <%}%>
+                        </td>
+                        <td><%-xuesheng[i].math%></td>
+                        <td><%-xuesheng[i].china%></td>
+
+
+
+
+
+                        <td>
+                            <button class="btn btn-default" onclick="location.href='/xupdate?id=<%-xuesheng[i]["_id"]%>'">更新</button>
+                            <button class="btn btn-danger xbtn1"  onclick="location.href='/xshan?id=<%-xuesheng[i]["_id"]%>'">删除</button>
+                        </td>
+
+
+
+
+
+
+                    </tr>
+
+                <%}%>
+
+            </table>
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a href="/three?title=xuesheng&paged=<%-paged=paged<=1?1:paged-1%>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li><a href="/three?title=xuesheng&paged=1">首页</a></li>
+                    <%for (let i=0;i<pagez;i++){%>
+                    <li><a href="/three?title=xuesheng&paged=<%-i+1%>"><%-i+1%></a></li>
+                    <%}%>
+                    <li><a href="/three?title=xuesheng&paged=<%-pagez%>">尾页</a></li>
+                    <li>
+                        <a href="/three?title=xuesheng&paged=<%-paged=paged>=pagez-1?pagez:parseInt(paged)+2%>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+
+<%}%>
+
+        </div>
+    </div>
+<script>
+    $(".btn1").click(function () {
+        $.ajax({
+            type:"GET",
+            url:"/shan",
+            success:function (data) {
+                if(data=="1"){
+                    window.location.reload()
+                }
+            }
+        })
+    })
+    $(".xbtn1").click(function () {
+        $.ajax({
+            type:"GET",
+            url:"/xshan",
+            success:function (data) {
+                if(data=="1"){
+                    window.location.reload()
+                }
+            }
+        })
+    })
+
+
+
+
+    $(".btn3").click(function () {
+        $.ajax({
+            type:"post",
+            url:"/users/sou",
+            data:{name:$(".input3").val()},
+            success:function (data) {
+                console.log(data)
+                if(data){
+                    $(".table").html("");
+                    $("nav").html("")
+                    var sss="";  //搜索框
+                    sss="<tr><th>名字</th><th>职称</th><th>操作</th> </tr>";
+                    if(data.length>0) {
+
+                        for (var i in data) {
+                            let sss1 = "";
+                            switch (data[i].xuan - 0) {
+                                case 1:
+                                    sss1 = "初级教师"
+                                    break;
+                                case 2:
+                                    sss1 = "中级教师"
+                                    break;
+                                case 3:
+                                    sss1 = "高级教师"
+                                    break;
+                            }
+                            sss += "<tr><td>" + data[i].name + "</td><td>" + sss1 + "</td><td><button class='btn btn-success' onclick=location.href='/cha?id=" + data[i]._id + "'>查看</button><button class='btn btn-default'  onclick=location.href='/supdate?id=" + data[i]._id + "'>更新</button> <button class='btn btn-danger btn4' onclick=location.href='/shan?id=" + data[i].name + "'>删除</button></td></tr>"
+                        }
+                    }else {
+                        sss+="<tr><td>用户不存在请重新输入关键字</td></tr>";
+                    }
+                    $(".table").html(sss);
+                    $(".btn4").click(function () {
+                        $.ajax({
+                            type:"GET",
+                            url:"/shan",
+                            success:function (data) {
+                                if(data=="1"){
+                                    window.location.reload()
+                                }
+                            }
+                        })
+                    })
+                }
+            }
+        })
+    })
+if(location.search.split("?")[1]){
+
+    var flag=location.search.split("?")[1].split("&")[0]
+    if(flag=="title=xiang"){
+        $("#left ul").find("li").eq(1).addClass("active").siblings().removeClass("active")
+    }else if(flag=="title=xuesheng") {
+        $("#left ul").find("li").eq(2).addClass("active").siblings().removeClass("active")
+
+    }else {
+        $("#left ul").find("li").eq(0).addClass("active").siblings().removeClass("active")
+
+    }
+
+}
+
+
+
+    $(".btn6").click(function () {
+        var str1=$("option:selected").val();
+        location.href="/three?title=xuesheng&class="+str1
+    })
+
+
+$(".huanfu").hover(function () {
+    $(this).find("div").css({display:"block"}).find("p").click(function () {
+        var yanse=$(this).index();
+       switch (yanse){
+           case 0:
+               $("body").css({background:"#000"});
+               break;
+           case 1:
+               $("body").css({background:"#0fba3b"});
+                break;
+           case 2:
+               $("body").css({background:"orange"});
+                break;
+           case 3:
+               $("body").css({background:"rgb(219,69,32)"});
+               break;
+       }
+    })
+},function () {
+    $(this).find("div").css({display:"none"})
+})
+
+</script>
+
+
+</body>
+</html>

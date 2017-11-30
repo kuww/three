@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+      <style>
+          body,html{width: 100%;
+          height: 100%}
+          body{background: url("/images/bg.jpg")no-repeat top center/cover;color: #ffffff}
+          div{
+              width: 300px;
+            margin: 200px auto}
+          h1{width: 400px}
+          button:nth-of-type(1){float: right}
+          p{width: 100%;display: flex;justify-content: space-between}
+      </style>
+  </head>
+  <body>
+
+     <% if(title){%>
+     <div>
+     <h1>欢迎:
+         <% switch (title[1]-0){
+         case 1:%>
+            初级教师
+         <%break;%>
+         <% case 2:%>
+            中级教师
+         <% break;%>
+         <% case 3:%>
+            高级教师
+         <% break;%>
+         <%}%>
+         <%-title[0]%>
+     </h1>
+         <p>
+     <button class="btn btn-default" onclick="location.href='/rtwo'">退出</button>
+         <button class="btn btn-success" onclick="location.href='/three'">进入系统</button>
+     <button class="btn btn-danger" onclick="location.href='/liu'">留言</button>
+         </p>
+     </div>
+     <%}else{%>
+     <div>
+    <h1>欢迎来到:XXX后台</h1>
+    <button class="btn btn-success" onclick="location.href='/two'">登录</button>
+
+    <button class="btn btn-danger" onclick="location.href='/one'">注册</button>
+     </div>
+  <%}%>
+  </body>
+<script src=javascripts/jquery-1.11.0.js></script>
+</html>
